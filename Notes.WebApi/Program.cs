@@ -1,4 +1,5 @@
 using System.Reflection;
+using AutoMapper;
 using Notes.Application;
 using Notes.Application.Common.Mappings;
 using Notes.Application.Interfaces;
@@ -8,7 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddAutoMapper(Assembly.GetExecutingAssembly(), typeof(INotesDbContext).Assembly);
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+    cfg.AddProfile(new AssemblyMappingProfile(typeof(INotesDbContext).Assembly));
+});
+
+var mapper = mapperConfig.CreateMapper();
+services.AddSingleton(mapper);
 
 services.AddApplication();
 services.AddPersistance(configuration);
