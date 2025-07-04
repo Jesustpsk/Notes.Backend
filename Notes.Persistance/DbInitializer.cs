@@ -2,8 +2,8 @@ namespace Notes.Persistance;
 
 public class DbInitializer
 {
-    public static void Initialize(NotesDbContext context)
+    public static async Task InitializeAsync(NotesDbContext context)
     {
-        context.Database.EnsureCreated();
+        await context.Database.EnsureCreatedAsync();
     }
 }
