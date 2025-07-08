@@ -21,7 +21,7 @@ public class GetNoteListQueryHandler : IRequestHandler<GetNoteListQuery, NoteLis
 
     public async Task<NoteListVm> Handle(GetNoteListQuery request, CancellationToken cancellationToken)
     {
-        var entityList = _context.Notes
+        var entityList = await _context.Notes
             .Where(note => note.UserId == request.UserId)
             .ProjectTo<NoteLookupDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
