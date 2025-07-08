@@ -12,7 +12,7 @@ public class CreateNoteDto : IMapWith<CreateNoteCommand>
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<CreateNoteCommand, Note>()
+        profile.CreateMap<CreateNoteDto, CreateNoteCommand>()
             .ForMember(noteCommand => noteCommand.Title,
                 opt => opt.MapFrom(noteDto => noteDto.Title))
             .ForMember(noteCommand => noteCommand.Details,

@@ -13,7 +13,7 @@ public class UpdateNoteDto : IMapWith<UpdateNoteCommand>
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<UpdateNoteCommand, Note>()
+        profile.CreateMap<UpdateNoteDto, UpdateNoteCommand>()
             .ForMember(noteCommand => noteCommand.Id,
                 opt => opt.MapFrom(noteDto => noteDto.Id))
             .ForMember(noteCommand => noteCommand.Title,
