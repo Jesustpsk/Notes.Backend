@@ -46,6 +46,13 @@ services.AddAuthentication(config =>
         options.RequireHttpsMetadata = false;
     });
 
+services.AddSwaggerGen(config =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
+
 var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())
@@ -59,6 +66,12 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    config.RoutePrefix = string.Empty;
+    config.SwaggerEndpoint("/swagger/v1/swagger.json", "Notes API");
+});
 app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
